@@ -1,1 +1,3 @@
 black==22.8.0
+requests
+swag
