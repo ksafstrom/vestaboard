@@ -111,5 +111,9 @@ def daily_pokemon():
     helpers.post_to_vestaboard(vestaboard_json_body)
     print("Message sent!")
 
-    if __name__ == "__main__":
+if __name__ == "__main__":
+    try:
         daily_pokemon()
+    except Exception as e:
+        print(f"Daily Pokemon failed: {e}")
+        raise
