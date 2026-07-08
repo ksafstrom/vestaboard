@@ -1,0 +1,50 @@
+name: Run Python Application
+
+on:
+  # Manual execution from GitHub Actions
+  workflow_dispatch:
+
+  # # Scheduled execution (UTC)
+  # schedule:
+  #   # Every day at 08:00 UTC
+  #   - cron: "0 8 * * *"
+
+permissions:
+  contents: read
+
+jobs:
+  run-app:
+    runs-on: ubuntu-latest
+
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run application
+        env:
+          VESTABOARD_RW_KEY: ${{ secrets.VESTABOARD_RW_KEY }}
+          VESTABOARD_SANDBOX_RW_KEY: ${{ secrets.VESTABOARD_SANDBOX_RW_KEY }}
+          ENVIRONMENT: production
+        run: |
+          python app/daily-pokemon.py
+
+      - name: Upload logs (always)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: application-logs
+          path: logs/
+          if-no-files-found: ignore
