@@ -1,2 +1,3 @@
 black==22.8.0
 requests
+swag>=2.0.5
