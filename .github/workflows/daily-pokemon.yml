@@ -22,10 +22,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Check environment
-        run: |
-          echo "Key exists: ${#VESTABOARD_RW_KEY}"
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -42,6 +38,7 @@ jobs:
           VESTABOARD_RW_KEY: ${{ secrets.VESTABOARD_RW_KEY }}
           VESTABOARD_SANDBOX_RW_KEY: ${{ secrets.VESTABOARD_SANDBOX_RW_KEY }}
         run: |
+          echo "Key exists: ${#VESTABOARD_RW_KEY}"
           echo "Starting application..."
           python -V
           python -m app.daily_pokemon.daily_pokemon
@@ -59,10 +56,10 @@ jobs:
       # echo "Repository tree:"
       # find . -maxdepth 5 | sort
 
-      - name: Upload logs (always)
+      - name: Upload debug log
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: application-logs
-          path: logs/
+          name: debug-log
+          path: output.log
           if-no-files-found: ignore

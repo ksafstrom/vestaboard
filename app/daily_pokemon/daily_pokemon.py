@@ -8,6 +8,8 @@ import random
 from app.common import helpers
 from app.daily_pokemon.energy_code_map import energy_code_map
 
+print("Opening the Pokedex...")
+
 
 # Create a function that retrieves the Pokemon data from Kalos
 def fetch_pokemon():
