@@ -21,46 +21,93 @@ def fetch_pokemon():
     print("Response:")
     print(response.text[:500]) 
 
-    if response.status_code == 200:
-        kalos_data = response.json()
-        if kalos_data and isinstance(kalos_data, list) and len(kalos_data) > 0:
-            random_pokemon_index = random.randint(
-                0, len(kalos_data)
-            )  # Numerical value is based on list entry in response
-            pokemon_number = kalos_data[random_pokemon_index].get("number", None)
-            pokemon_name = kalos_data[random_pokemon_index].get("name", None)
-            type_list = [type_name.title() for type_name in kalos_data[random_pokemon_index].get("type", [])]
-            pokemon_type = "/".join(type_list)
-            pokemon_feet = int(kalos_data[random_pokemon_index].get("height", None) // 12)  # N // 12 = feet
-            pokemon_inches = int(kalos_data[random_pokemon_index].get("height", None) % 12)  # N % 12 = inches
-            if pokemon_inches <= 10:  # Less than equal to 10 add zero before value
-                pokemon_inches = "0" + str(pokemon_inches)
-            else:
-                pokemon_inches
-            pokemon_weight = kalos_data[random_pokemon_index].get("weight", None)
-            if pokemon_weight >= 9999:  # Greater than or equal to account for Gigantimax Evolutions
-                pokemon_weight_formatted = "????.?"
-            else:
-                pokemon_weight_formatted = "{:.2f}".format(pokemon_weight)
-            pokemon_abilities = kalos_data[random_pokemon_index].get("abilities", [])
-            pokemon_abilities = next(ability for ability in pokemon_abilities if ability is not None)
-            # print(f"Pokedex Entry: {pokemon_name}, {pokemon_number}, {pokemon_type}, {pokemon_height:.2f}, {pokemon_weight:.2f}, {pokemon_abilities}")
-            energy_colors = [energy_code_map.get(type_name, 69) for type_name in type_list]
-            return (
-                energy_colors,
-                pokemon_name,
-                pokemon_number,
-                pokemon_type,
-                pokemon_feet,
-                pokemon_inches,
-                pokemon_weight_formatted,
-                pokemon_abilities,
-            )
-        else:
-            print("API response doesn't contain the 'number' value.")
-    else:
-        print(f"Failed to fetch data. Status code: {response.status_code}")
+def fetch_pokemon():
+    pokemon_id = random.randint(1, 1025)
+
+    url = f"https://pokeapi.co/api/v2/pokemon/{pokemon_id}"
+
+    response = requests.get(url, timeout=10)
+
+    print("Status:", response.status_code)
+    print("Response:")
+    print(response.text[:500])
+
+    if response.status_code != 200:
+        print("Failed to fetch Pokemon")
         return None
+
+    pokemon_data = response.json()
+
+    pokemon_number = pokemon_data.get("id")
+    pokemon_name = pokemon_data.get("name", "").title()
+
+    type_list = [
+        pokemon["type"]["name"].title()
+        for pokemon in pokemon_data["types"]
+    ]
+
+    pokemon_type = "/".join(type_list)
+
+    energy_colors = [
+        energy_code_map.get(type_name, 69)
+        for type_name in type_list
+    ]
+
+    height_inches = pokemon_data["height"] * 3.93701
+
+    pokemon_feet = int(height_inches // 12)
+    pokemon_inches = int(height_inches % 12)
+
+    pokemon_weight_formatted = "{:.2f}".format(
+        pokemon_data["weight"] / 10
+    )
+
+    pokemon_abilities = pokemon_data["abilities"][0]["ability"]["name"].title()
+
+    return (
+        energy_colors,
+        pokemon_name,
+        pokemon_number,
+        pokemon_type,
+        pokemon_feet,
+        pokemon_inches,
+        pokemon_weight_formatted,
+        pokemon_abilities,
+    )
+
+        # if kalos_data and isinstance(kalos_data, list) and len(kalos_data) > 0:
+        #     random_pokemon_index = random.randint(
+        #         0, len(kalos_data)
+        #     )  # Numerical value is based on list entry in response
+        #     pokemon_number = kalos_data[random_pokemon_index].get("number", None)
+        #     pokemon_name = kalos_data[random_pokemon_index].get("name", None)
+        #     type_list = [type_name.title() for type_name in kalos_data[random_pokemon_index].get("type", [])]
+        #     pokemon_type = "/".join(type_list)
+        #     pokemon_feet = int(kalos_data[random_pokemon_index].get("height", None) // 12)  # N // 12 = feet
+        #     pokemon_inches = int(kalos_data[random_pokemon_index].get("height", None) % 12)  # N % 12 = inches
+        #     if pokemon_inches <= 10:  # Less than equal to 10 add zero before value
+        #         pokemon_inches = "0" + str(pokemon_inches)
+        #     else:
+        #         pokemon_inches
+        #     pokemon_weight = kalos_data[random_pokemon_index].get("weight", None)
+        #     if pokemon_weight >= 9999:  # Greater than or equal to account for Gigantimax Evolutions
+        #         pokemon_weight_formatted = "????.?"
+        #     else:
+        #         pokemon_weight_formatted = "{:.2f}".format(pokemon_weight)
+        #     pokemon_abilities = kalos_data[random_pokemon_index].get("abilities", [])
+        #     pokemon_abilities = next(ability for ability in pokemon_abilities if ability is not None)
+        #     # print(f"Pokedex Entry: {pokemon_name}, {pokemon_number}, {pokemon_type}, {pokemon_height:.2f}, {pokemon_weight:.2f}, {pokemon_abilities}")
+        #     energy_colors = [energy_code_map.get(type_name, 69) for type_name in type_list]
+        #     return (
+        #         energy_colors,
+        #         pokemon_name,
+        #         pokemon_number,
+        #         pokemon_type,
+        #         pokemon_feet,
+        #         pokemon_inches,
+        #         pokemon_weight_formatted,
+        #         pokemon_abilities,
+        #     )
 
 
 # TODO look into writing logic for orientation: str,
