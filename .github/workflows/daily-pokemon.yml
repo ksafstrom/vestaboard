@@ -31,7 +31,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install -r app/requirements.txt
 
       - name: Run application
         env:
@@ -39,7 +39,7 @@ jobs:
           VESTABOARD_SANDBOX_RW_KEY: ${{ secrets.VESTABOARD_SANDBOX_RW_KEY }}
           ENVIRONMENT: production
         run: |
-          python app/daily-pokemon.py
+          python vestaboard\app\daily_pokemon.py
 
       - name: Upload logs (always)
         if: always()
