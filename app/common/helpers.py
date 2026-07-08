@@ -1,7 +1,7 @@
 # helpers.py
 import json
 import requests
-import swag
+import os
 import urllib3
 from app.common.character_code_map import character_code_map
 
@@ -10,7 +10,9 @@ POST_TO_SANDBOX = False
 def get_from_vestaboard():
     vestaboard_api_url = "https://rw.vestaboard.com"
     api_key_header_name = "X-Vestaboard-Read-Write-Key"
-    api_key_value = swag.ensure_env_var_not_none_or_empty("VESTABOARD_RW_KEY")
+    api_key_value = os.getenv("VESTABOARD_RW_KEY")
+    if not api_key_value:
+            raise ValueError("Environment variable VESTABOARD_RW_KEY is missing or empty")
 
     headers = {
         api_key_header_name: api_key_value
@@ -39,7 +41,7 @@ def post_to_vestaboard(vestaboard_json_body):
 
     vestaboard_api_url = "https://rw.vestaboard.com"
 
-    api_key = swag.ensure_env_var_not_none_or_empty(
+    api_key =  os.getenv(
         "VESTABOARD_SANDBOX_RW_KEY" if POST_TO_SANDBOX else "VESTABOARD_RW_KEY"
     )
 
