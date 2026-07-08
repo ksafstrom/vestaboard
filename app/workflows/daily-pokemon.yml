@@ -4,10 +4,10 @@ on:
   # Manual execution from GitHub Actions
   workflow_dispatch:
 
-  # Scheduled execution (UTC)
-  schedule:
-    # Every day at 08:00 UTC
-    - cron: "0 8 * * *"
+  # # Scheduled execution (UTC)
+  # schedule:
+  #   # Every day at 08:00 UTC
+  #   - cron: "0 8 * * *"
 
 permissions:
   contents: read
