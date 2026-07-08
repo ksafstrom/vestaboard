@@ -33,6 +33,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r app/requirements.txt
 
+      - name: Find swag
+        run: |
+          find . -iname "*swag*" -print
+
       - name: Verify imports
         env:
           PYTHONPATH: ${{ github.workspace }}
