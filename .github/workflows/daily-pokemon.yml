@@ -24,7 +24,7 @@ jobs:
 
       - name: Check environment
         run: |
-        echo "Key exists: ${#VESTABOARD_RW_KEY}"
+          echo "Key exists: ${#VESTABOARD_RW_KEY}"
 
       - name: Set up Python
         uses: actions/setup-python@v5
