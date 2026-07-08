@@ -1,13 +1,10 @@
 name: Run Daily Pokemon
 
 on:
-  # Manual execution from GitHub Actions
-  workflow_dispatch:
+  schedule:
+    - cron: "0 8 * * *"
 
-  # # Scheduled execution (UTC)
-  # schedule:
-  #   # Every day at 08:00 UTC
-  #   - cron: "0 8 * * *"
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -44,17 +41,6 @@ jobs:
           python -V
           python -m app.daily_pokemon.daily_pokemon
           echo "Application finished with exit code $?"
-      # - name: Debug repository
-      # echo "Current directory:"
-      # pwd
-
-      # echo ""
-      # echo "Top-level files:"
-      # ls -la
-
-      # echo ""
-      # echo "Repository tree:"
-      # find . -maxdepth 5 | sort
 
       - name: Upload debug log
         if: always()

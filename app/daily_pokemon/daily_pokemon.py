@@ -75,41 +75,6 @@ def fetch_pokemon():
         pokemon_abilities,
     )
 
-        # if kalos_data and isinstance(kalos_data, list) and len(kalos_data) > 0:
-        #     random_pokemon_index = random.randint(
-        #         0, len(kalos_data)
-        #     )  # Numerical value is based on list entry in response
-        #     pokemon_number = kalos_data[random_pokemon_index].get("number", None)
-        #     pokemon_name = kalos_data[random_pokemon_index].get("name", None)
-        #     type_list = [type_name.title() for type_name in kalos_data[random_pokemon_index].get("type", [])]
-        #     pokemon_type = "/".join(type_list)
-        #     pokemon_feet = int(kalos_data[random_pokemon_index].get("height", None) // 12)  # N // 12 = feet
-        #     pokemon_inches = int(kalos_data[random_pokemon_index].get("height", None) % 12)  # N % 12 = inches
-        #     if pokemon_inches <= 10:  # Less than equal to 10 add zero before value
-        #         pokemon_inches = "0" + str(pokemon_inches)
-        #     else:
-        #         pokemon_inches
-        #     pokemon_weight = kalos_data[random_pokemon_index].get("weight", None)
-        #     if pokemon_weight >= 9999:  # Greater than or equal to account for Gigantimax Evolutions
-        #         pokemon_weight_formatted = "????.?"
-        #     else:
-        #         pokemon_weight_formatted = "{:.2f}".format(pokemon_weight)
-        #     pokemon_abilities = kalos_data[random_pokemon_index].get("abilities", [])
-        #     pokemon_abilities = next(ability for ability in pokemon_abilities if ability is not None)
-        #     # print(f"Pokedex Entry: {pokemon_name}, {pokemon_number}, {pokemon_type}, {pokemon_height:.2f}, {pokemon_weight:.2f}, {pokemon_abilities}")
-        #     energy_colors = [energy_code_map.get(type_name, 69) for type_name in type_list]
-        #     return (
-        #         energy_colors,
-        #         pokemon_name,
-        #         pokemon_number,
-        #         pokemon_type,
-        #         pokemon_feet,
-        #         pokemon_inches,
-        #         pokemon_weight_formatted,
-        #         pokemon_abilities,
-        #     )
-
-
 # TODO look into writing logic for orientation: str,
 def translate_names(inputstring: str, expected_length: int):
     character_result = helpers.convert_string_character_code(inputstring)
