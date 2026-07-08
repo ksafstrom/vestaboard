@@ -1,4 +1,4 @@
-name: Run Python Application
+name: Run Daily Pokemon
 
 on:
   # Manual execution from GitHub Actions
@@ -39,7 +39,19 @@ jobs:
           VESTABOARD_SANDBOX_RW_KEY: ${{ secrets.VESTABOARD_SANDBOX_RW_KEY }}
           ENVIRONMENT: production
         run: |
-          python ./app/daily_pokemon/daily_pokemon.py
+          python /app/daily_pokemon/daily_pokemon.py
+
+      # - name: Debug repository
+      # echo "Current directory:"
+      # pwd
+
+      # echo ""
+      # echo "Top-level files:"
+      # ls -la
+
+      # echo ""
+      # echo "Repository tree:"
+      # find . -maxdepth 5 | sort
 
       - name: Upload logs (always)
         if: always()
