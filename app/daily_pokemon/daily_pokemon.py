@@ -12,9 +12,14 @@ print("Opening the Pokedex...")
 
 
 # Create a function that retrieves the Pokemon data from Kalos
+
 def fetch_pokemon():
     kalos_url = "https://www.pokemon.com/us/api/pokedex/kalos"
     response = requests.get(kalos_url)
+    print("Status:", response.status_code)
+    print("Content-Type:", response.headers.get("content-type"))
+    print("Response:")
+    print(response.text[:500]) 
 
     if response.status_code == 200:
         kalos_data = response.json()
