@@ -35,15 +35,20 @@ jobs:
 
       - name: Run application
         env:
+          PYTHONPATH: ${{ github.workspace }}
           VESTABOARD_RW_KEY: ${{ secrets.VESTABOARD_RW_KEY }}
           VESTABOARD_SANDBOX_RW_KEY: ${{ secrets.VESTABOARD_SANDBOX_RW_KEY }}
         run: |
-          echo "Key exists: ${#VESTABOARD_RW_KEY}"
+          echo "PYTHONPATH=$PYTHONPATH"
           echo "Starting application..."
           python -V
-          python -m app.daily_pokemon.daily_pokemon
+          python -u -m app.daily_pokemon.daily_pokemon
           echo "Application finished with exit code $?"
-
+      - name: Verify imports
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: |
+          python -c "import swag; print(swag.__file__)"
       # - name: Debug repository
       # echo "Current directory:"
       # pwd
