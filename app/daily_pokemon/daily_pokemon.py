@@ -110,3 +110,6 @@ def daily_pokemon():
     print("Creating message...")
     helpers.post_to_vestaboard(vestaboard_json_body)
     print("Message sent!")
+
+    if __name__ == "__main__":
+        daily_pokemon()
