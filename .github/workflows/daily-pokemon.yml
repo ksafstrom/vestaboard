@@ -39,7 +39,7 @@ jobs:
           VESTABOARD_SANDBOX_RW_KEY: ${{ secrets.VESTABOARD_SANDBOX_RW_KEY }}
           ENVIRONMENT: production
         run: |
-          python app/daily_pokemon.py
+          python vestaboard\app\daily_pokemon.py
 
       - name: Upload logs (always)
         if: always()
