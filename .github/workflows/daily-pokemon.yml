@@ -37,7 +37,6 @@ jobs:
         env:
           VESTABOARD_RW_KEY: ${{ secrets.VESTABOARD_RW_KEY }}
           VESTABOARD_SANDBOX_RW_KEY: ${{ secrets.VESTABOARD_SANDBOX_RW_KEY }}
-          ENVIRONMENT: production
         run: |
           python -m app.daily_pokemon.daily_pokemon
 
