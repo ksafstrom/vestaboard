@@ -105,5 +105,6 @@ def daily_pokemon():
         [0, 0, 8, 20, 50, 0, *height_characters, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 23, 20, 50, 0, *weight_characters, 0, 0, 0, 0, 0, 0],
     ]
-
+    print("Creating message...")
     helpers.post_to_vestaboard(vestaboard_json_body)
+    print("Message sent!")

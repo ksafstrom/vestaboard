@@ -22,6 +22,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Check environment
+        run: |
+        echo "Key exists: ${#VESTABOARD_RW_KEY}"
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -38,7 +42,10 @@ jobs:
           VESTABOARD_RW_KEY: ${{ secrets.VESTABOARD_RW_KEY }}
           VESTABOARD_SANDBOX_RW_KEY: ${{ secrets.VESTABOARD_SANDBOX_RW_KEY }}
         run: |
+          echo "Starting application..."
+          python -V
           python -m app.daily_pokemon.daily_pokemon
+          echo "Application finished with exit code $?"
 
       # - name: Debug repository
       # echo "Current directory:"
