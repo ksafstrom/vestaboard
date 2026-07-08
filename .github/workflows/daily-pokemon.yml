@@ -33,6 +33,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r app/requirements.txt
 
+      - name: Verify imports
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: |
+          python -c "import swag; print(swag.__file__)"
+
       - name: Run application
         env:
           PYTHONPATH: ${{ github.workspace }}
@@ -44,11 +50,6 @@ jobs:
           python -V
           python -u -m app.daily_pokemon.daily_pokemon
           echo "Application finished with exit code $?"
-      - name: Verify imports
-        env:
-          PYTHONPATH: ${{ github.workspace }}
-        run: |
-          python -c "import swag; print(swag.__file__)"
       # - name: Debug repository
       # echo "Current directory:"
       # pwd
