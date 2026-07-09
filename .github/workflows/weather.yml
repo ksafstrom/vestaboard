@@ -1,8 +1,8 @@
-name: Run Weather
+name: Daily Weather
 
 on:
   schedule:
-    - cron: "0 14 * * *"
+    - cron: "*/15 * * * *"
 
   workflow_dispatch:
 
@@ -41,7 +41,9 @@ jobs:
           echo "Starting application..."
           python -V
           python -m app.weather.weather
-          echo "Application finished with exit code $?"
+          status=$?
+          echo "Application finished with exit code $status"
+          exit $status
 
       - name: Upload debug log
         if: always()
