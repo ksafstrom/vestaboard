@@ -1,8 +1,8 @@
-name: Run Daily Pokemon
+name: Run Weather Pokemon
 
 on:
   schedule:
-    - cron: "0 19  * * *"
+    - cron: "0 14 * * *"
 
   workflow_dispatch:
 
@@ -35,11 +35,12 @@ jobs:
           PYTHONPATH: ${{ github.workspace }}
           VESTABOARD_RW_KEY: ${{ secrets.VESTABOARD_RW_KEY }}
           VESTABOARD_SANDBOX_RW_KEY: ${{ secrets.VESTABOARD_SANDBOX_RW_KEY }}
+          VESTABOARD_WEATHER_KEY: ${{ secrets.VESTABOARD_WEATHER_KEY }}
         run: |
           echo "PYTHONPATH=$PYTHONPATH"
           echo "Starting application..."
           python -V
-          python -m app.daily_pokemon.daily_pokemon
+          python -m app.weather.weather
           echo "Application finished with exit code $?"
 
       - name: Upload debug log

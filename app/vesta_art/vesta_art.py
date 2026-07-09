@@ -18,9 +18,6 @@ def vesta_art():
     helpers.post_to_vestaboard(vestaboard_json_body)
 
 
-# (assets/tpci-tech-org.png)
-# (assets/pikachu.png)
-# (assets/pokeball.png)
 # (assets/art-1.png)
 # (assets/art-2.png)
 # (assets/art-3.png)

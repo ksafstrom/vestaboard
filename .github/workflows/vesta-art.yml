@@ -2,7 +2,7 @@ name: Run Daily Pokemon
 
 on:
   schedule:
-    - cron: "0 19  * * *"
+    - cron: "0 1 * * *"
 
   workflow_dispatch:
 
@@ -39,7 +39,7 @@ jobs:
           echo "PYTHONPATH=$PYTHONPATH"
           echo "Starting application..."
           python -V
-          python -m app.daily_pokemon.daily_pokemon
+          python -m app.vesta_art.vesta_art
           echo "Application finished with exit code $?"
 
       - name: Upload debug log

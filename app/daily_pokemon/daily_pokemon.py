@@ -1,8 +1,3 @@
-# daily_pokemon.py
-# TO DOs
-# Offer for free can not be behind Vestaboard+
-# Cache API and/or limit to 151
-# Togglable between Ordered and Random
 import requests
 import random
 from app.common import helpers
@@ -12,14 +7,6 @@ print("Opening the Pokedex...")
 
 
 # Create a function that retrieves the Pokemon data from Kalos
-
-def fetch_pokemon():
-    kalos_url = "https://pokeapi.co/api/v2/pokemon/"
-    response = requests.get(kalos_url)
-    print("Status:", response.status_code)
-    print("Content-Type:", response.headers.get("content-type"))
-    print("Response:")
-    print(response.text[:500]) 
 
 def fetch_pokemon():
     pokemon_id = random.randint(1, 1025)

@@ -1,0 +1,15 @@
+CONDITIONS = {
+    "Sunny": "SUNNY",
+    "Clear": "CLEAR",
+    "Cloudy": "CLOUDY",
+    "Overcast": "OVERCAST",
+    "Partly cloudy": "PT CLOUD",
+    "Mist": "MIST",
+    "Fog": "FOG",
+    "Light rain": "RAIN",
+    "Moderate rain": "RAIN",
+    "Heavy rain": "RAIN",
+    "Patchy rain nearby": "RAIN",
+    "Snow": "SNOW",
+    "Thunderstorm": "STORM",
+}
