@@ -3,7 +3,7 @@ name: Run Daily Pokemon
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 19  * * *'
+    - cron: '30 14  * * *'
 
 permissions:
   contents: read
