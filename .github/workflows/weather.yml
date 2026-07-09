@@ -1,4 +1,4 @@
-name: Run Weather Pokemon
+name: Run Weather
 
 on:
   schedule:
