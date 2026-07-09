@@ -2,11 +2,11 @@ import os
 import requests
 from datetime import datetime
 from app.common import helpers
-from app.weather import forecast_types
+from app.weather.forecast_types import forecast_types
 
 print("Opening the forecast...")
 
-CITY="DuPont"
+CITY = "DuPont, Washington"
 
 # Create a function that retrieves the local weather
 def fetch_weather():
