@@ -39,8 +39,8 @@ def fetch_weather():
     date_number = str(date.day)
     weather_type = forecast_types.get(
     forecast["day"]["condition"]["text"],"WEATHER")
-    high_temp = f"{round(forecast['day']['maxtemp_f'])}F"
-    lo_temp = f"{round(forecast['day']['mintemp_f'])}F"
+    high_temp = f"{round(forecast['day']['maxtemp_f'])}"
+    lo_temp = f"{round(forecast['day']['mintemp_f'])}"
 
     return (
         day_of_week,
@@ -78,12 +78,15 @@ def weather():
         high_temp,
         lo_temp,
     ) = fetch_weather()
-    date = translate_names(date_number,2)
+    print(type(high_temp), high_temp)
+    print(type(lo_temp), lo_temp)
+    print(type(weather_type), weather_type)
+    date = translate_names(date_number, 2)
     month = translate_names(month_abb, 3)
     day = translate_names(day_of_week, 9)
     forecast = translate_names(weather_type, 8)
-    high_temp = translate_names(high_temp,2)
-    lo_temp =translate_names(lo_temp, 2)
+    high_temp = translate_names(high_temp, 2)
+    lo_temp = translate_names(lo_temp, 2)
  
 
     vestaboard_json_body = [
