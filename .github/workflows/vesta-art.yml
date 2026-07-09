@@ -3,7 +3,6 @@ name: Run Daily Art
 on:
   schedule:
     - cron: "0 1 * * *"
-
   workflow_dispatch:
 
 permissions:
