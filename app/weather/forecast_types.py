@@ -1,4 +1,4 @@
-CONDITIONS = {
+forecast_types = {
     "Sunny": "SUNNY",
     "Clear": "CLEAR",
     "Cloudy": "CLOUDY",
