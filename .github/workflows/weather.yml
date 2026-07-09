@@ -1,9 +1,9 @@
-name: Daily Weather
+name: Run Daily Weather
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/15 * * * *"
+    - cron: '*/5 * * * *'
 
 permissions:
   contents: read
@@ -31,12 +31,10 @@ jobs:
 
       - name: Run application
         env:
-          PYTHONPATH: ${{ github.workspace }}
           VESTABOARD_RW_KEY: ${{ secrets.VESTABOARD_RW_KEY }}
           VESTABOARD_SANDBOX_RW_KEY: ${{ secrets.VESTABOARD_SANDBOX_RW_KEY }}
           VESTABOARD_WEATHER_KEY: ${{ secrets.VESTABOARD_WEATHER_KEY }}
         run: |
-          echo "PYTHONPATH=$PYTHONPATH"
           echo "Starting application..."
           python -V
           python -m app.weather.weather
