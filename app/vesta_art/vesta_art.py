@@ -17,6 +17,14 @@ def vesta_art():
     vestaboard_json_body = random_layout
     helpers.post_to_vestaboard(vestaboard_json_body)
 
+if __name__ == "__main__":
+    try:
+        vesta_art()
+    except Exception as e:
+        print(f"No art for you. {e}")
+        raise
+
+
 
 # (assets/art-1.png)
 # (assets/art-2.png)
