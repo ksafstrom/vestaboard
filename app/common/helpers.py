@@ -7,6 +7,32 @@ from app.common.character_code_map import character_code_map
 
 POST_TO_SANDBOX = False
 
+
+def handle_request_exception(response, exception, operation="request"):
+    """Logs HTTP errors and raises an exception so GitHub Actions fails."""
+
+    print(f"Failed to {operation}: {exception}")
+
+    if response is not None:
+        print(f"Response status: {response.status_code}")
+
+        try:
+            body = response.json()
+            print(json.dumps(body, indent=2))
+
+            # More descriptive error for common Vestaboard rate limiting
+            if response.status_code == 429:
+                message = body.get("message", "Rate limited")
+                raise RuntimeError(
+                    f"Vestaboard API rate limited (429): {message}"
+                )
+
+        except ValueError:
+            # Response wasn't JSON
+            print(response.text)
+
+    raise RuntimeError(f"{operation} failed") from exception
+
 def get_from_vestaboard():
     vestaboard_api_url = "https://rw.vestaboard.com"
     api_key_header_name = "X-Vestaboard-Read-Write-Key"
@@ -49,6 +75,8 @@ def post_to_vestaboard(vestaboard_json_body):
         "X-Vestaboard-Read-Write-Key": api_key
     }
 
+    response = None
+
     try:
         response = requests.post(
             vestaboard_api_url,
@@ -57,9 +85,8 @@ def post_to_vestaboard(vestaboard_json_body):
             verify=True,
             timeout=30,
         )
-
-        print(response.status_code)
         response.raise_for_status()
+        print(response.status_code)
 
         if response.content:
             print(response.json())
@@ -69,7 +96,7 @@ def post_to_vestaboard(vestaboard_json_body):
         if "response" in locals() and response is not None:
             print(f"Response status: {response.status_code}")
             print(response.text)
-
+        raise RuntimeError("Failed to post to Vestaboard") from e
     print(vestaboard_json_body)
 
 
