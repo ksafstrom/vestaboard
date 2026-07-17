@@ -8,7 +8,6 @@ def row(text):
     )
 
     while len(chars) < 22:
-
         chars.append(0)
 
     return chars[:22]
