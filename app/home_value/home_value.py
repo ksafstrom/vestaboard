@@ -1,6 +1,6 @@
 import os
 
-from app.home_value.redfin import fetch_redfin_value
+from app.home_value.relator import fetch_redfin_value
 from app.home_value.history import get_previous
 from app.home_value.history import save
 
