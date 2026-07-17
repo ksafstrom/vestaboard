@@ -8,7 +8,7 @@ from app.home_value.formatter import row
 from app.common import helpers
 
 
-PROPERTY_ID = os.environ["PROPERTY_ID"]
+HOME_URL = os.environ["HOME_URL"]
 
 
 def money(value):
@@ -24,7 +24,7 @@ def home_value():
     print("Fetching Redfin valuation...")
 
     result = fetch_redfin_value(
-        PROPERTY_ID
+        HOME_URL
     )
 
     value = result["value"]
