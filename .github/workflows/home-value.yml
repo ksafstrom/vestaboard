@@ -37,7 +37,7 @@ jobs:
 
       - name: Run Home Value App
         env:
-          PROPERTY_ID: ${{ secrets.PROPERTY_ID }}
+          HOME_URL: ${{ secrets.HOME_URL }}
           VESTABOARD_API_KEY: ${{ secrets.VESTABOARD_API_KEY }}
         run: |
           python -m app.home_value.home_value
