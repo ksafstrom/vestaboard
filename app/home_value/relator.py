@@ -1,60 +1,71 @@
-import requests
-import os
+import json
+import re
+from playwright.sync_api import sync_playwright
 
 
-def fetch_redfin_value(property_id: str):
+def fetch_redfin_value(url: str):
 
-    url = (
-        "https://www.redfin.com/stingray/api/home/"
-        f"details?propertyId={property_id}"
-    )
+    with sync_playwright() as p:
 
-    headers = {
-        "User-Agent": (
-            "Mozilla/5.0 "
-            "(Windows NT 10.0; Win64; x64) "
-            "AppleWebKit/537.36 "
-            "Chrome/120 Safari/537.36"
-        ),
-        "Accept": "application/json",
-    }
-
-    response = requests.get(
-        url,
-        headers=headers,
-        timeout=15
-    )
-
-    response.raise_for_status()
-
-    data = response.json()
-
-    return parse_home_value(data)
-
-
-def parse_home_value(data):
-
-    """
-    Redfin response parser.
-
-    Redfin nests property information deeply.
-    This keeps the extraction isolated.
-    """
-
-    try:
-
-        home_data = data["payload"]["propertyInfo"]
-
-        value = home_data["price"]
-
-        return {
-            "value": value
-        }
-
-    except KeyError:
-
-        print(data)
-
-        raise Exception(
-            "Unable to locate Redfin estimate"
+        browser = p.chromium.launch(
+            headless=True
         )
+
+        page = browser.new_page(
+            user_agent=(
+                "Mozilla/5.0 "
+                "(Windows NT 10.0; Win64; x64) "
+                "Chrome/120 Safari/537.36"
+            )
+        )
+
+        page.goto(
+            url,
+            wait_until="networkidle",
+            timeout=60000
+        )
+
+        html = page.content()
+
+        browser.close()
+
+
+    return extract_value(html)
+
+
+def extract_value(html):
+
+    """
+    Search Redfin's embedded application state.
+    """
+
+    patterns = [
+
+        r'"estimatedValue":(\d+)',
+
+        r'"redfinEstimate":(\d+)',
+
+        r'"price":(\d+)',
+
+    ]
+
+
+    for pattern in patterns:
+
+        match = re.search(
+            pattern,
+            html
+        )
+
+        if match:
+
+            return {
+                "value": int(
+                    match.group(1)
+                )
+            }
+
+
+    raise Exception(
+        "Unable to find Redfin estimate"
+    )
