@@ -1,17 +1,15 @@
 import json
 import os
 
-FILE = "home_value_history.json"
+FILE = "home_value.json"
 
 
-def load_previous():
+def get_previous():
 
     if not os.path.exists(FILE):
-
         return None
 
     with open(FILE) as f:
-
         return json.load(f)
 
 
@@ -23,6 +21,5 @@ def save(value):
             {
                 "value": value
             },
-            f,
-            indent=4
+            f
         )

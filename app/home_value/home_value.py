@@ -1,29 +1,35 @@
 import os
 
-from app.home_value.scraper import fetch_home_value
-from app.home_value.history import load_previous
+from app.home_value.redfin import fetch_redfin_value
+from app.home_value.history import get_previous
 from app.home_value.history import save
-from app.home_value.formatter import row
 
+from app.home_value.formatter import row
 from app.common import helpers
 
 
-def format_money(value):
+PROPERTY_ID = os.environ["PROPERTY_ID"]
 
-    if value >= 1000000:
 
-        return f"${value/1000000:.2f}M"
+def money(value):
+
+    if value >= 1_000_000:
+        return f"${value/1_000_000:.2f}M"
 
     return f"${value/1000:.1f}K"
 
 
 def home_value():
 
-    value = fetch_home_value(
-        os.environ["HOME_URL"]
+    print("Fetching Redfin valuation...")
+
+    result = fetch_redfin_value(
+        PROPERTY_ID
     )
 
-    previous = load_previous()
+    value = result["value"]
+
+    previous = get_previous()
 
     change = 0
 
@@ -33,24 +39,41 @@ def home_value():
 
     save(value)
 
-    board = [
+
+    message = [
 
         row("HOME VALUE"),
 
         row(""),
 
-        row(format_money(value)),
+        row(money(value)),
 
-        row(f"CHANGE"),
+        row("CHANGE"),
 
-        row(format_money(change)),
+        row(
+            f"{'+' if change >= 0 else '-'}"
+            f"{money(abs(change))}"
+        ),
 
-        row("UPDATED")
+        row("REDFIN UPDATE")
     ]
 
-    helpers.post_to_vestaboard(board)
+
+    helpers.post_to_vestaboard(
+        message
+    )
 
 
 if __name__ == "__main__":
 
-    home_value()
+    try:
+
+        home_value()
+
+    except Exception as e:
+
+        print(
+            f"Home value failed: {e}"
+        )
+
+        raise

@@ -1,46 +1,30 @@
 from playwright.sync_api import sync_playwright
-import re
-
-USER_AGENT = (
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-    "AppleWebKit/537.36 "
-    "(KHTML, like Gecko) "
-    "Chrome/138.0 Safari/537.36"
-)
 
 
-def fetch_home_value(url: str):
+def fetch_home_value(url):
 
     with sync_playwright() as p:
 
-        browser = p.chromium.launch(
-            headless=True
-        )
+        browser = p.chromium.launch(headless=True)
 
-        page = browser.new_page(
-            user_agent=USER_AGENT
-        )
+        page = browser.new_page()
 
         page.goto(
             url,
-            wait_until="networkidle",
+            wait_until="domcontentloaded",
             timeout=60000
         )
 
-        text = page.locator("body").inner_text()
+        page.wait_for_timeout(5000)
+
+        page.screenshot(path="debug.png", full_page=True)
+
+        with open("debug.html", "w", encoding="utf-8") as f:
+            f.write(page.content())
+
+        with open("debug.txt", "w", encoding="utf-8") as f:
+            f.write(page.locator("body").inner_text())
 
         browser.close()
 
-    match = re.search(
-        r"\$([\d,]+)",
-        text
-    )
-
-    if not match:
-        raise Exception("Unable to locate home value.")
-
-    value = int(
-        match.group(1).replace(",", "")
-    )
-
-    return value
+    raise Exception("Debug complete.")
