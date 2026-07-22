@@ -3,12 +3,12 @@ name: Home Value
 on:
   workflow_dispatch:
 
-  schedule:
+  #schedule:
     # Every other Monday at 8:00 AM UTC
     # GitHub doesn't support biweekly schedules natively.
     # This runs every Monday and the Python app should
     # determine whether it's an "update week".
-    - cron: "0 8 * * 1"
+    #- cron: "0 8 * * 1"
 
 jobs:
   home-value:
