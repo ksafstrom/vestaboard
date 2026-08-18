@@ -6,7 +6,7 @@ from app.weather.forecast_types import forecast_types
 
 print("Opening the forecast...")
 
-CITY = "Seattle, Washington"
+CITY = os.environ["WEATHER_CITY"]
 
 # Create a function that retrieves the local weather
 def fetch_weather():
